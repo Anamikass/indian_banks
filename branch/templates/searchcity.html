@@ -1,0 +1,86 @@
+{% load static %}
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="colorlib.com">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="s01">
+      {% if city_list %}
+      <form action="{% url 'search_city' %}" method="post">
+            {% csrf_token %}
+        <fieldset>
+          <legend>Discover Bank Branches in your city</legend>
+        </fieldset>
+        <div class="inner-form">
+          <div class="dropdown form-group first-wrap">
+            <select name="city" id="city" class="form-control" required>
+                                <option selected="" disabled="">Select City</option>
+                            {% for city in city_list %}
+                                <option value="{{city.bank_city}}">{{city.bank_city}}</option>
+                            {% endfor %}
+            </select>
+            <!-- <input id="search" type="text" placeholder="What are you looking for?" /> -->
+          </div>
+          <div class="dropdown form-group second-wrap">
+                        <select name="bank" id="bank" class="form-control" required>
+                                <option selected="" disabled="">Select Bank</option>
+                            {% for bank in bank_list %}
+                                <option value="{{bank.bank_name}}">{{bank.bank_name}}</option>
+                            {% endfor %}
+                        </select>
+            <!-- <input id="location" type="text" placeholder="location" /> -->
+          </div>
+          <div class="input-field form-group third-wrap">
+            <button class="btn-search" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+      {% endif %}
+    </div>
+         {% if branch_list %}         
+
+<section class="section contact" style="background-color: aquamarine;">
+    <!-- container start -->
+    <div class="container">
+            <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive justify-content-center">
+                            <table class="table table-striped custom-table mb-0 datatable border">
+                                <thead>
+                                    <tr>
+                                        <th>Bank name</th>
+                                        <th>IFSC Code</th>
+                                        <th>Branch</th>
+                                        <th>Address</th>
+                                        <th>City</th>
+                                        <th>District</th>
+                                        <th>State</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                      {% for detail in branch_list %}
+                                    <tr>
+                                        <td>{{detail.bank_name}} </td>
+                                        <td>{{detail.bank_ifsc}}</td>
+                                        <td>{{detail.bank_branch}}</td>
+                                        <td>{{detail.bank_address}}</td>
+                                        <td>{{detail.bank_city}}</td>
+                                        <td>{{detail.bank_district}}</td>
+                                        <td>{{detail.bank_state}}</td>
+                                    </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</section>
+{% endif %}
+  </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
